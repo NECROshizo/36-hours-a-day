@@ -27,7 +27,7 @@ jobs:
             pip install ruff
 
         - name: Configure Linters
-          run: echo "Configuring Linters" && cp ruff.toml $HOME/ruff.toml
+          run: echo "Configuring Linters" && cp pyproject.toml $HOME/pyproject.toml
 
         - name: Run linters for ${{ matrix.python-version }}
           run: |
