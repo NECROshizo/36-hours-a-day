@@ -1,7 +1,7 @@
 # 36-hours-a-day
 
 ### Технологии
-[![Python](https://img.shields.io/badge/Python-3.9|3.10|3.11-blue?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.12-blue?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0.20-blue?style=flat&logo=python&logoColor=white)](https://pypi.org/project/SQLAlchemy/2.0.20/)
 [![Alembic](https://img.shields.io/badge/Alembic-1.12.0-blue?style=flat&logo=python&logoColor=white)](https://pypi.org/project/Alembic/1.12.0/)
 [![Pydantic](https://img.shields.io/badge/Pydantic-2.3.0-blue?style=flat&logo=python&logoColor=white)](https://pypi.org/project/Pydantic/2.3.0/)
