@@ -5,8 +5,8 @@
 [![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0.20-blue?style=flat&logo=python&logoColor=white)](https://pypi.org/project/SQLAlchemy/2.0.20/)
 [![Alembic](https://img.shields.io/badge/Alembic-1.12.0-blue?style=flat&logo=python&logoColor=white)](https://pypi.org/project/Alembic/1.12.0/)
 [![Pydantic](https://img.shields.io/badge/Pydantic-2.3.0-blue?style=flat&logo=python&logoColor=white)](https://pypi.org/project/Pydantic/2.3.0/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.103.1-blue?style=flat&logo=python&logoColor=white)](https://pypi.org/project/FastAPI/0.103.1/)
-[![Uvicorn](https://img.shields.io/badge/Uvicorn-0.23.2-blue?style=flat&logo=python&logoColor=white)](https://pypi.org/project/Uvicorn/0.23.2/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-blue?style=flat&logo=python&logoColor=white)](https://pypi.org/project/FastAPI/0.103.1/)
+[![Uvicorn](https://img.shields.io/badge/Uvicorn-0.24.2-blue?style=flat&logo=python&logoColor=white)](https://pypi.org/project/Uvicorn/0.23.2/)
 ---
 [![Ruff](https://img.shields.io/badge/Ruff-used-green?style=flat&logo=python&logoColor=white)](https://docs.astral.sh/ruff/)
 
