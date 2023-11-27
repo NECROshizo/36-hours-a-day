@@ -1,5 +1,4 @@
 # 36-hours-a-day
-# 36-hours-a-day
 
 ### Технологии
 [![Django](https://img.shields.io/badge/Django-3.2.10-blue?style=flat&logo=django&logoColor=white)](https://www.djangoproject.com/)
