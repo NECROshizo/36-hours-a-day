@@ -1,7 +1,7 @@
 from django.db import models
 
 class Dialer(models.Model):
-    """Список дилеров.""" 
+    """Список дилеров."""
     name = models.CharField(max_length=100)
 
 
@@ -10,42 +10,62 @@ class Product(models.Model):
 
     article = models.CharField(max_length=30)
     ean_13 = models.IntegerField()
-    name = models.CharField(max_length=255) 
+    name = models.CharField(max_length=255)
     cost = models.DecimalField(max_digits=13, decimal_places=2)
-    min_recommended_price = models.DecimalField(max_digits=13, decimal_places=2)
+    min_recommended_price = models.DecimalField(max_digits=13, decimal_places=2)  # XXX он вот отсутствует в табличках а в ТЗ есть
     recommended_price = models.DecimalField(max_digits=13, decimal_places=2)
     category_id = models.IntegerField()
-    ozon_name = models.CharField(max_length=255) 
-    name_1c = models.CharField(max_length=255) 
-    wb_name = models.CharField(max_length=255) 
-    ozon_article = models.TextField()
-    wb_article = models.TextField()
-    ym_article = models.TextField()
-    wb_article_td = models.TextField()
-     
+    # ozon_name = models.CharField(max_length=255) # XXX: нужны ли нам раз сказали что это справочные данные
+    # name_1c = models.CharField(max_length=255)
+    # wb_name = models.CharField(max_length=255)
+    # ozon_article = models.TextField()
+    # wb_article = models.TextField()
+    # ym_article = models.TextField()
+    # wb_article_td = models.TextField()
+
+    class Meta:
+        verbose_name = 'Продукт Просета'
+        verbose_name_plural = 'Продукты Просета'
+
 
 class DealerPrice(models.Model):
     """Данные дилера."""
 
-    product_key = models.CharField(primary_key=True, max_length=255)
+    product_key = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=13, decimal_places=2)
     product_url = models.TextField()
     product_name = models.CharField(max_length=255)
-    date = models.DateField() 
+    date = models.DateField()
     dealer_id = models.ForeignKey(
         Dialer,
         on_delete=models.CASCADE,
         related_name='dialer_prices'
-    ) 
+    )
+    class Meta:
+        verbose_name = 'Продукт Дилера'
+        verbose_name_plural = 'Продукты Дилера'
+        constraints = (
+            models.UniqueConstraint(
+                fields=('product_key', 'dealer_id'), # XXX: по ответам я понял, что такая связка
+                name='unique_product_key_dealer_id',
+            ),
+        )
 
 class ProductDialerKey(models.Model):
     """Связка."""
 
     product_key = models.ForeignKey(
         DealerPrice,
-        on_delete=models.CASCADE
-    ) 
+        on_delete=models.CASCADE,
+        related_name='dialer_key',
+    )
     product_id = models.ForeignKey(
         Product,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='dialer_key',
+    )
+    dealer_id = models.ForeignKey( # XXX: Вот он непонятен зачем, есть в ТЗ и табличках
+        Dialer,
+        on_delete=models.CASCADE,
+        related_name='dialer_key',
     )
