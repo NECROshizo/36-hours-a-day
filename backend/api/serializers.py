@@ -13,9 +13,13 @@ class DialerSerializer(serializers.ModelSerializer):
 
 class DialerPriceSerializer(serializers.ModelSerializer):    
     """Сериализатор продукции дилера."""
-    dealer_name = serializers.StringRelatedField(
-        many=False,
-        read_only=True
+    # dealer_name = serializers.StringRelatedField(
+    #     many=False,
+    #     read_only=True
+    # )
+
+    dealer = DialerSerializer(
+        many=False
     )
 
     is_defined = serializers.SerializerMethodField()
@@ -29,9 +33,11 @@ class DialerPriceSerializer(serializers.ModelSerializer):
             'product_url',
             'product_name', 
             'date', 
-            'dealer_id',
-            'dealer_name',
+            'dealer',
+            'is_defined',       # привязка присутсвует
         )             
 
-    def get_is_favorited(self, obj):
-        return True
+    def get_is_defined(self, obj):    # TODO: Реализовать метод 
+        return True                     
+
+
