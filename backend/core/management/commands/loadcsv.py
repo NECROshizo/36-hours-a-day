@@ -1,7 +1,5 @@
 import csv
-import decimal 
 import os
-import re
 from pathlib import Path
 
 from django.conf import settings
@@ -22,8 +20,7 @@ def create_dialer_model(file_data: csv.DictReader):
 
 
 def create_product_model(file_data: csv.DictReader):
-    """Создание модели Recipe."""
-    decimal.getcontext().prec = 2
+    """Создание модели Product."""
     Product.objects.all().delete()
     # Product.objects.bulk_create(
     #     [
@@ -40,7 +37,7 @@ def create_product_model(file_data: csv.DictReader):
     #     ]
     # )
     for row in file_data:
-        value = re.findall(r'\d+\.\d+', row.get('ean_13', 0))
+        value = row.get('ean_13', 0)
         print(value)
         #print(type(value))
 
