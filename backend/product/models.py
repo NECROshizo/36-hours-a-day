@@ -27,7 +27,7 @@ class Product(models.Model):
 class DealerPrice(models.Model):
     """Данные дилера."""
 
-    product_key = models.CharField(primary_key=True, max_length=255)
+    product_key = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=13, decimal_places=2)
     product_url = models.TextField()
     product_name = models.CharField(max_length=255)

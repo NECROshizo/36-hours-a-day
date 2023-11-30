@@ -5,7 +5,20 @@ from pathlib import Path
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from product.models import Dialer, Product
+from product.models import Dialer, DealerPrice, Product, ProductDialerKey
+
+
+def get_int_value_from_row(row, name):
+    return 0 if row.get(name, 0) == '' else int(float(row.get(name, 0)))
+
+
+def get_float_value_from_row(row, name):
+    return float(0 if row.get(name, 0) == '' else row.get(name, 0))
+
+
+def get_dialer_obj(row):
+    if Dialer.objects.filter(id=row.get('id')).exists():
+        return Dialer.objects.get(id=row.get('id'))
 
 
 def create_dialer_model(file_data: csv.DictReader):
@@ -22,24 +35,61 @@ def create_dialer_model(file_data: csv.DictReader):
 def create_product_model(file_data: csv.DictReader):
     """Создание модели Product."""
     Product.objects.all().delete()
-    # Product.objects.bulk_create(
-    #     [
-    #         Product(
-    #             id=row.get('id'),
-    #             article=row.get('article'),
-    #             ean_13=int(float(row.get('ean_13', 0))),
-    #             name=row.get('name'),
-    #             cost=float(row.get('cost')) #decimal.Decimal(str(row.get('cost'))),
-    #             # text=row.get('text'),
-    #             # cooking_time=row.get('cooking_time')
-    #         )
-    #         for row in file_data
-    #     ]
-    # )
-    for row in file_data:
-        value = row.get('ean_13', 0)
-        print(value)
-        #print(type(value))
+    Product.objects.bulk_create(
+        [
+            Product(
+                id=row.get('id'),
+                article=row.get('article'),
+                ean_13=get_int_value_from_row(row, 'ean_13'),
+                name=row.get('name'),
+                cost=get_float_value_from_row(row, 'cost'), 
+                min_recommended_price=get_float_value_from_row(row, 'min_recommended_price'),
+                recommended_price=get_float_value_from_row(row, 'recommended_price'),
+                category_id=get_int_value_from_row(row, 'category_id'),
+                ozon_name=row.get('ozon_name'),
+                name_1c=row.get('name_1c'),
+                wb_name=row.get('wb_name'),
+                ozon_article=row.get('ozon_article'),
+                wb_article=row.get('wb_article'),
+                ym_article=row.get('ym_article'),
+                wb_article_td=row.get('wb_article_td')
+            )
+            for row in file_data 
+        ]
+    )
+
+
+def create_dealerprice_model(file_data: csv.DictReader):
+    """Создание модели Product."""
+    DealerPrice.objects.all().delete()
+    DealerPrice.objects.bulk_create(
+        [
+            DealerPrice(
+                id=row.get('id'),
+                product_key=row.get('product_key'),
+                price=get_float_value_from_row(row, 'price'),                 
+                product_url=row.get('product_url', ''),
+                product_name=row.get('product_name'),
+                date=row.get('date'),
+                dealer_id=get_dialer_obj(row)
+            )
+            for row in file_data if get_dialer_obj(row)
+        ]
+    )
+
+
+def create_product_dialer_model(file_data: csv.DictReader):
+    ProductDialerKey.objects.all().delete()
+    ProductDialerKey.objects.bulk_create(
+        [
+            ProductDialerKey(
+                id=row.get('id'),
+                # product_key=row.get('product_key'),
+                # dealer_id=get_dialer_obj(row)
+            )
+            for row in file_data if get_dialer_obj(row)
+        ]
+    )        
 
 
 class Command(BaseCommand):
@@ -47,6 +97,9 @@ class Command(BaseCommand):
     link_models = (
         ('marketing_dealer.csv', create_dialer_model),
         ('marketing_product.csv', create_product_model),
+        ('marketing_dealerprice.csv', create_dealerprice_model),
+        # ('marketing_productdealerkey', create_product_dialer_model),
+
     )
 
     def handle(self, *args, **options):
