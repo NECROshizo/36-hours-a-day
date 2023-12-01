@@ -10,4 +10,7 @@ router_v1.register("dialer_prices", DealerPriceViewSet, basename="dialer_prices"
 router_v1.register("products", ProductViewSet, basename="products")
 
 
-urlpatterns = [path("", include(router_v1.urls))]
+urlpatterns = [
+    path("v1/", include(router_v1.urls)),
+    path('auth/', include('djoser.urls.authtoken')),
+]

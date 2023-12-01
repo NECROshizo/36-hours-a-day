@@ -16,9 +16,14 @@ def get_float_value_from_row(row, name):
     return float(0 if row.get(name, 0) == "" else row.get(name, 0))
 
 
-def get_dialer_obj(row):
-    if Dialer.objects.filter(id=row.get("id")).exists():
-        return Dialer.objects.get(id=row.get("id"))
+def get_dialer_obj(row, name):
+    if Dialer.objects.filter(id=row.get(name)).exists():
+        return Dialer.objects.get(id=row.get(name))
+
+
+def get_product_obj(row, name):
+    if Product.objects.filter(id=row.get(name)).exists():
+        return Product.objects.get(id=row.get(name))
 
 
 def create_dialer_model(file_data: csv.DictReader):
@@ -68,10 +73,10 @@ def create_dealerprice_model(file_data: csv.DictReader):
                 product_url=row.get("product_url", ""),
                 product_name=row.get("product_name"),
                 date=row.get("date"),
-                dealer_id=get_dialer_obj(row),
+                dealer_id=get_dialer_obj(row, 'dealer_id'),
             )
             for row in file_data
-            if get_dialer_obj(row)
+            if get_dialer_obj(row, 'dealer_id')
         ]
     )
 
@@ -82,8 +87,8 @@ def create_product_dialer_model(file_data: csv.DictReader):
         [
             ProductDialerKey(
                 id=row.get("id"),
-                # product_key=row.get('product_key'),
-                # dealer_id=get_dialer_obj(row)
+                product_key=get_product_obj(row, 'product_key'),
+                dealer_id=get_dialer_obj(row, 'dealer_id')
             )
             for row in file_data
             if get_dialer_obj(row)
