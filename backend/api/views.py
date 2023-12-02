@@ -27,7 +27,7 @@ class DealerPriceViewSet(ReadOnlyModelViewSet):
 
     @action(detail=True)
     def get_data_for_marking(self, request, pk):
-        obj = get_object_or_404(DealerPrice, pk=pk)
+        get_object_or_404(DealerPrice, pk=pk)
         # болванка для тестирования
         return Response(ProductSerializer(Product.objects.all()[:5], many=True).data)
 
@@ -46,7 +46,7 @@ class DealerPriceViewSet(ReadOnlyModelViewSet):
         # создание новой связки
         if int(pr_id):
             ob_prod = get_object_or_404(Product, pk=pr_id)
-            ob_key = ProductDialerKey.objects.get_or_create(
+            ProductDialerKey.objects.get_or_create(
                 product_key=ob_dprice, product_id=ob_prod
             )
             return Response(
