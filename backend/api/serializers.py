@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from product.models import Dialer, DealerPrice, Product
+from product.models import Dialer, DealerPrice, Product, ProductDialerKey
 
 
 class ShortProductSerializer(serializers.ModelSerializer):
@@ -34,7 +34,6 @@ class DialerPriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = DealerPrice
         fields = (
-            "id",
             "product_key",
             "price",
             "product_url",
@@ -46,12 +45,12 @@ class DialerPriceSerializer(serializers.ModelSerializer):
         )
 
     def get_is_defined(self, obj):
-        return obj.product_link.exists()
+        return ProductDialerKey.objects.filter(product_key=obj.product_key).exists() 
 
     def get_product_cust(self, obj):
-        if obj.product_link.exists():
-            instance = obj.product_link.all()[0].product_id
-            return ShortProductSerializer(instance).data
+        if ProductDialerKey.objects.filter(product_key=obj.product_key).exists():
+            instance = ProductDialerKey.objects.filter(product_key=obj.product_key)[0] 
+            return ShortProductSerializer(instance.product_id).data
 
 
 class ProductSerializer(serializers.ModelSerializer):

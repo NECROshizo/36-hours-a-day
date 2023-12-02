@@ -20,7 +20,7 @@ class ProductAdmin(admin.ModelAdmin):
     """Админка для товаров заказчика."""
 
     list_display = (
-        # 'id',
+        'id',
         "article",
         "ean_13",
         "name",
@@ -45,7 +45,7 @@ class DealerPriceAdmin(admin.ModelAdmin):
     """Админка товаров дилера."""
 
     list_display = (
-        # 'id',
+        'id',
         "product_key",
         "price",
         "product_url",

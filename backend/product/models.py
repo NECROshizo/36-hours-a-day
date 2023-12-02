@@ -16,7 +16,7 @@ class Product(models.Model):
     """Продукция заказчика."""
 
     article = models.CharField(max_length=30)
-    ean_13 = models.IntegerField()
+    ean_13 = models.PositiveBigIntegerField() #IntegerField()
     name = models.CharField(max_length=255)
     cost = models.DecimalField(max_digits=13, decimal_places=2)
     min_recommended_price = models.DecimalField(max_digits=13, decimal_places=2)
@@ -55,9 +55,11 @@ class DealerPrice(models.Model):
 class ProductDialerKey(models.Model):
     """Связка."""
 
-    product_key = models.ForeignKey(
-        DealerPrice, on_delete=models.CASCADE, related_name="product_link"
-    )
+    # product_key = models.ForeignKey(
+    #     DealerPrice, on_delete=models.CASCADE, related_name="product_link"
+    # )
+
+    product_key = models.CharField(max_length=255)
     product_id = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="product_link"
     )
