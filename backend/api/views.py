@@ -6,8 +6,9 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from core.pagination import PageLimitPagination
-from product.models import Dialer, DealerPrice, Product, ProductDialerKey
-from .serializers import DialerSerializer, DialerPriceSerializer, ProductSerializer
+from product.models import Dialer, DealerPrice, Product, ProductDialerKey, MLResult
+from .serializers import (
+    DialerSerializer, DialerPriceSerializer, DialerPriceDSSerializer, ProductSerializer, MLResultSerializer)
 
 
 class DialerViewSet(ReadOnlyModelViewSet):
@@ -17,13 +18,13 @@ class DialerViewSet(ReadOnlyModelViewSet):
 
 class DealerPriceViewSet(ReadOnlyModelViewSet):
     queryset = DealerPrice.objects.order_by('product_key', 'date').distinct('product_key')
-    
+
     serializer_class = DialerPriceSerializer
     pagination_class = PageLimitPagination
-    
+
     def get_object(self):
         obj = get_list_or_404(DealerPrice, product_key=self.kwargs["pk"])[0]
-        return obj 
+        return obj
 
     @action(detail=True)
     def get_data_for_marking(self, request, pk):
@@ -35,12 +36,12 @@ class DealerPriceViewSet(ReadOnlyModelViewSet):
         methods=["post"], detail=True, url_path="set_link_with_product/(?P<pr_id>\d+)"
     )
     def set_link_with_product(self, request, pk, pr_id):
-        ob_dprice = DealerPrice.objects.filter(product_key=pk) 
+        ob_dprice = DealerPrice.objects.filter(product_key=pk)
         if not ob_dprice:
             raise Http404(
                 f'Не найден продукт с номером {pk}'
             )
-            
+
         ob_dprice = ob_dprice.order_by('date')[0]
 
         # создание новой связки
@@ -63,3 +64,40 @@ class ProductViewSet(ReadOnlyModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     pagination_class = PageLimitPagination
+
+
+class MatchViewSet(ReadOnlyModelViewSet):
+    queryset = MLResult.objects.all()  # Неочень правильно подумать над  get_serializer_class()
+    serializer_class = MLResultSerializer
+
+    def list(self, request):
+        queryset1 = DealerPrice.objects.order_by('product_key', 'date').distinct('product_key')
+        queryset2 = Product.objects.all()
+
+        serializer1 = DialerPriceDSSerializer(queryset1, many=True)
+        serializer2 = ProductSerializer(queryset2, many=True)
+
+        combined_data = {
+            'dealer_priсe': serializer1.data,
+            'product': serializer2.data
+        }
+
+        return Response(data=combined_data, status=status.HTTP_200_OK)
+
+    @action(
+        methods=["post"], detail=False, url_path="make_match")
+    def make_match(self, request):
+        MLResult.objects.all().delete()
+        data = request.data["result"]
+        MLResult.objects.bulk_create(
+            [
+                MLResult(
+                    product_key=el.get("product_key"),
+                    product_id=Product.objects.get(id=el.get("product_id")),
+                )
+                for el in data
+            ]
+    )
+
+        data = request.data
+        return Response(status=status.HTTP_201_CREATED)
