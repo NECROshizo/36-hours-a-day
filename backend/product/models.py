@@ -68,7 +68,7 @@ class MLResult(models.Model):
     """Результат работы ML"""
     product_key = models.CharField(max_length=255)
     product_id = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="product_link"
+        Product, on_delete=models.CASCADE, related_name="product_ml"
     )
 
     class Meta:
