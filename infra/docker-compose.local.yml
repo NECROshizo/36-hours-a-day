@@ -3,17 +3,17 @@ version: "3.9"
 services:
 
   postgres:
-    image: postgres:15-alpine
-    env_file:
-      - .env
+    # image: postgres:15-alpine
+    # image: postgres:13
+    env_file: .env
     container_name: postgres_prossept_infra
-    environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_PORT=${DB_PORT}
-    ports:
-      - "5432:5432"
+    # environment:
+    #   - POSTGRES_DB=${POSTGRES_DB}
+    #   - POSTGRES_USER=${POSTGRES_USER}
+    #   - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    #   - POSTGRES_PORT=${DB_PORT}
+    # ports:
+    #   - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     healthcheck:
@@ -22,8 +22,8 @@ services:
       timeout: 3s
       retries: 5
       start_period: 3s
-    networks:
-      - services
+    # networks:
+    #   - services
 
   backend:
     build:
@@ -36,28 +36,28 @@ services:
     volumes:
       - static_volume:/app/static/
       - media_volume:/app/media/
-    networks:
-      - services
+    # networks:
+    #   - services
 
   nginx:
     image: nginx:1.19.3
     ports:
       - "80:80"
-    # depends_on:
-    #   - backend
+    depends_on:
+      - backend
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - static_volume:/usr/share/nginx/html/
       - ./docs/:/usr/share/nginx/html/api/docs/
       - media_volume:/usr/share/nginx/html/media/
-    networks:
-      - services
+    # networks:
+    #   - services
 
 volumes:
   postgres_data:
   static_volume:
   media_volume:
 
-networks:
-  services:
-    name: prossept
+# networks:
+#   services:
+#     name: prossept
