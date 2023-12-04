@@ -3,6 +3,8 @@ import time
 
 import schedule
 
+from model import matching
+
 
 URL_PRODUCT = 'products'
 URL_GET = 'match'
@@ -30,7 +32,8 @@ def post_data(url: str, data: list[dict]) -> None:
 
 
 def main():
-    print(*get_data(URL_GET)['dealer_priсe'], sep='\n')
+    data = get_data(URL_GET)
+    dealer_prices = data['dealer_priсe']
     """ XXX: Получает
     [...,
     {'id': 717, 'product_key': 'https://kub02.ru/catalog/prosept/ognebiozashchita_dlya_drevesiny_prosept_1_gruppa_s_indikatorom_gotovyy_sostav_10_kg/',
@@ -39,7 +42,7 @@ def main():
     ...]
     """
 
-    print(*get_data(URL_GET)['product'], sep='\n')
+    products = data['product']
     """ XXX: Получает
     [...,
    {'id': 52, 'article': '113-075', 'ean_13': 4680008146816,
@@ -50,8 +53,14 @@ def main():
     ...]
     """
 
-    result = [{'product_key': 23, 'product_id':46}, {'product_key': 23, 'product_id':49}]
+    result = matching(dealer_prices, products)
     post_data(URL_POST, result)
+    """ Отправляет
+    [...,
+    {'product_key': 23, 'product_id':46}, 
+    {'product_key': 23, 'product_id':49},
+    ...]
+    """
 
 
 if __name__ == '__main__':
