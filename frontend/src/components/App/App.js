@@ -5,75 +5,74 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Item from '../Item/Item';
 import {dealersApi} from '../../utils/dealersApi';
+import {ITEMS} from '../../constants/constants';
 
 
 function App() {
-
-  const items = [
-    {
-      id: 1,
-      productKey: 1,
-      price: 100,
-    //  url: norikov.notion.site,
-      name: 'item1',
-      date: '2010.1.24'
-    },
-    {
-      id: 2,
-      productKey: 1,
-      price: 100,
-    //  url: norikov.notion.site,
-    name: 'item1',
+/* const items = [
+  {	
+    id: 1,
+    productKey: 546227,
+    price: 233.00,
+    //product__url: url('https://akson.ru//p/sredstvo_universalnoe_prosept_universal_spray_500ml/'),
+    name: 'РЎСЂРµРґСЃС‚РІРѕ СѓРЅРёРІРµСЂСЃР°Р»СЊРЅРѕРµ Prosept Universal Spray, 500РјР',
     date: '2010.1.24'
-    },{
-      id: 3,
-      productKey: 1,
-      price: 100,
-    //  url: norikov.notion.site,
-    name: 'item1',
-    date: '2010.1.24'
-    },{
-      id: 4,
-      productKey: 1,
-      price: 100,
-    //  url: norikov.notion.site,
-    name: 'item1',
-    date: '2010.1.24'
-    },
-    {
-      id: 5,
-      productKey: 1,
-      price: 100,
-    //  url: norikov.notion.site,
-    name: 'item1',
-    date: '2010.1.24'
-    },
-    {
-      id: 6,
-      productKey: 1,
-      price: 100,
-    //  url: norikov.notion.site,
-    name: 'item1',
-    date: '2010.1.24'
-    },
-    {
-      id: 7,
-      productKey: 1,
-      price: 100,
-    //  url: norikov.notion.site,
-    name: 'item1',
-    date: '2010.1.24'
-    },
-    {
-      id: 8,
-      productKey: 1,
-      price: 100,
-    //  url: norikov.notion.site,
-    name: 'item1',
-    date: '2010.1.24'
-    }
-  ]
-
+  },
+  {
+    id: 2,
+    productKey: 1,
+    price: 100,
+  //  url: norikov.notion.site,
+  name: 'item1',
+  date: '2010.1.24'
+  },{
+    id: 3,
+    productKey: 1,
+    price: 100,
+  //  url: norikov.notion.site,
+  name: 'item1',
+  date: '2010.1.24'
+  },{
+    id: 4,
+    productKey: 1,
+    price: 100,
+  //  url: norikov.notion.site,
+  name: 'item1',
+  date: '2010.1.24'
+  },
+  {
+    id: 5,
+    productKey: 1,
+    price: 100,
+  //  url: norikov.notion.site,
+  name: 'item1',
+  date: '2010.1.24'
+  },
+  {
+    id: 6,
+    productKey: 1,
+    price: 100,
+  //  url: norikov.notion.site,
+  name: 'item1',
+  date: '2010.1.24'
+  },
+  {
+    id: 7,
+    productKey: 1,
+    price: 100,
+  //  url: norikov.notion.site,
+  name: 'item1',
+  date: '2010.1.24'
+  },
+  {
+    id: 8,
+    productKey: 1,
+    price: 100,
+  //  url: norikov.notion.site,
+  name: 'item1',
+  date: '2010.1.24'
+  }
+] */
   const matchedItems = [
     {
       id: 1,
@@ -96,7 +95,7 @@ function App() {
       name: 'itemProsept5'
     }
   ]
-
+  const [items, setItems] = useState([ITEMS]);
   const [itemToMatch, setItemToMatch] = useState({});
 
   useEffect(() => {
@@ -108,7 +107,6 @@ function App() {
 
 
   function onItemClick(item) {
-    console.log(item)
     setItemToMatch(item);
     localStorage.setItem('itemToMatch', JSON.stringify(item));
   //  localStorage.clear();
@@ -120,7 +118,7 @@ function App() {
       return prosept.name
     } else return ''
   }
-/*
+
   useEffect(() => {
     dealersApi.getDealerProducts()
       .then((data) => {
@@ -130,7 +128,7 @@ function App() {
         console.log(`Ошибка: ${err}`)
       })
   }, [])
-  */
+  
 
   return (
     <div className='page'>

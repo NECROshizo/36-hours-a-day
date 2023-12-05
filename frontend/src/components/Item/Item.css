@@ -4,9 +4,12 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  gap: 40px;
 }
 
 .item__match-search, .item__dealer-info {
+  width: 40vw;
+  height: inherit;
   font-size: 24px;
   padding: 20px;
   border: 1px solid #38A43A;
@@ -21,6 +24,10 @@
 
 .item__proposap-title {
  margin-right: 10px;
+}
+
+.item__prod-name {
+  height: inherit;
 }
 
 .item__buttons {

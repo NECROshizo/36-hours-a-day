@@ -24,8 +24,10 @@
 }
 
 .card__title:hover {
-  width: fit-content;
-  overflow: visible;
+  overflow: inherit;
+  text-overflow: inherit;
+  white-space: inherit;
+  height: auto;
 }
 
 .card__date, .card__price, .card__prod-name {
