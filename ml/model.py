@@ -3,13 +3,18 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import re
+import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 import pymorphy2
 
+nltk.download('stopwords')
+nltk.download('punkt')
+
 import warnings
 warnings.filterwarnings('ignore')
+
 
 # количество выводимых рекомендаций
 K = 5
@@ -63,7 +68,7 @@ def matching(dealer_json: list, products_json: list):
     
     # обработка текста
     data_products['name_clean'] = data_products['name'].apply(
-        lambda x: preprocess_text(add_spaces(x))
+lambda x: preprocess_text(add_spaces(x))
         )
     data_dealers['product_name_clean'] = data_dealers['product_name'].apply(
         lambda x: preprocess_text(add_spaces(x))
