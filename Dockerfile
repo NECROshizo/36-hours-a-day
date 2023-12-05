@@ -27,4 +27,4 @@ RUN pip install --upgrade pip &&\
 RUN pip install gunicorn &&\
     pip install psycopg2-binary
 
-CMD ["gunicorn", "--bind", "0:8000", "prosept_match_product.wsgi"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "prosept_match_product.wsgi"]
