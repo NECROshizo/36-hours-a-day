@@ -28,6 +28,15 @@ services:
       - static:/backend_static/
       - media:/app/media/
 
+  # frontend:
+  #   build:
+  #     context: ../frontend
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - static:/app/result_build/build
+  #   depends_on:
+  #     - backend
+
   nginx:
     image: nginx:1.19.3
     # container_name: nginx_prossept
