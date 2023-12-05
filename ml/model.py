@@ -7,7 +7,7 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
-import pymorphy2
+import pymorphy3
 
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -56,7 +56,7 @@ def matching(dealer_json: list, products_json: list):
         # Токенизация
         tokens = word_tokenize(cleaned_text.lower())
 
-        morph = pymorphy2.MorphAnalyzer()
+        morph = pymorphy3.MorphAnalyzer()
         lemmas = [morph.parse(word)[0][2] for word in tokens]
 
         # Удаление стоп-слов
