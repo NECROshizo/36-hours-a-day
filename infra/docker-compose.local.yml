@@ -5,31 +5,32 @@ services:
   postgres:
     image: postgres:13
     env_file: .env
-    container_name: postgres_prossept
+    # container_name: postgres_prossept
     volumes:
       - data:/var/lib/postgresql/data/
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d ${POSTGRES_DB} -U ${POSTGRES_USER}"]
-      interval: 3s
-      timeout: 3s
-      retries: 5
-      start_period: 3s
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready -d ${POSTGRES_DB} -U ${POSTGRES_USER}"]
+    #   interval: 3s
+    #   timeout: 3s
+    #   retries: 5
+    #   start_period: 3s
 
   backend:
     build:
       context: ../backend
       dockerfile: Dockerfile
     env_file: .env
-    container_name: backend_prossept
+    # container_name: backend_prossept
     depends_on:
       - postgres
     volumes:
-      - static:/app/static/
+      # - static:/app/static/
+      - static:/backend_static/
       - media:/app/media/
 
   nginx:
     image: nginx:1.19.3
-    container_name: nginx_prossept
+    # container_name: nginx_prossept
     ports:
       - "80:80"
     depends_on:
