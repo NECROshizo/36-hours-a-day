@@ -5,14 +5,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 import re
 import nltk
 from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 import pymorphy3
+import warnings
 
 nltk.download('stopwords')
 nltk.download('punkt')
 
-import warnings
 warnings.filterwarnings('ignore')
 
 
@@ -20,7 +19,7 @@ warnings.filterwarnings('ignore')
 K = 5
 
 def matching(dealer_json: list, products_json: list):
-    
+
     if isinstance(products_json, list):
         data_products = pd.DataFrame(products_json)
     if isinstance(dealer_json, list):
@@ -41,7 +40,7 @@ def matching(dealer_json: list, products_json: list):
     data_products['name'] = data_products['name'].str.replace('.C', '. C')
 
     def add_spaces(data):
-        # Добавляет пробелы 
+        # Добавляет пробелы
         spaced_text = re.sub(r'(?<=[a-zA-Z])(?=[а-яА-ЯёЁ])|(?<=[а-яА-ЯёЁ])(?=[a-zA-Z])', ' ', data)
         spaced_text = re.sub(r'(\S)\*(\S)', r'\1 * \2', spaced_text)
         spaced_text = re.sub(r'(\d+)([а-яА-ЯёЁa-zA-Z]+)', r'\1 \2', spaced_text)
@@ -65,7 +64,7 @@ def matching(dealer_json: list, products_json: list):
 
         # Возвращение предобработанного текста
         return ' '.join(filtered_words)
-    
+
     # обработка текста
     data_products['name_clean'] = data_products['name'].apply(
 lambda x: preprocess_text(add_spaces(x))
@@ -79,7 +78,7 @@ lambda x: preprocess_text(add_spaces(x))
     # эмбединги
     product_tfidf_matrix = vectorizer.fit_transform(data_products['name_clean'].tolist())
     dealers_tfidf_matrix = vectorizer.transform(data_dealers['product_name_clean'].tolist())
-    
+
     # рассчитываем сходство
     cosine_similarities = cosine_similarity(dealers_tfidf_matrix, product_tfidf_matrix)
 
@@ -98,6 +97,6 @@ lambda x: preprocess_text(add_spaces(x))
             product_id = data_products.iloc[j]['id']
 
             # добавляем пару в список
-            result_list.append({'product_key': dealer_key, 'product_id': product_id})
+            result_list.append({'product_key': dealer_key, 'product_id': int(product_id)})
 
     return result_list
