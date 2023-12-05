@@ -10,14 +10,14 @@ jobs:
       runs-on: ubuntu-latest
       strategy:
         matrix:
-          python-version: ['3.12']
+          python-version: ['3.11']
 
       steps:
         - name: Checkout code
-          uses: actions/checkout@v2
+          uses: actions/checkout@v3
 
         - name: Set up Python ${{ matrix.python-version }}
-          uses: actions/setup-python@v2
+          uses: actions/setup-python@v4
           with:
             python-version: ${{ matrix.python-version }}
 
@@ -25,10 +25,21 @@ jobs:
           run: |
             python -m pip install --upgrade pip
             pip install ruff
+            pip install -r ./backend/requirements.txt
 
         - name: Configure Linters
-          run: echo "Configuring Linters" && cp pyproject.toml $HOME/pyproject.toml
+          run: echo "Configuring Linters" 
 
         - name: Run linters for ${{ matrix.python-version }}
+          # env:
+          #   POSTGRES_USER: django_user
+          #   POSTGRES_PASSWORD: django_password
+          #   POSTGRES_DB: django_db
+          #   DB_HOST: 127.0.0.1
+          #   DB_PORT: 5432
           run: |
             ruff check backend\
+
+  build_and_push_to_docker_hub:  
+
+          
