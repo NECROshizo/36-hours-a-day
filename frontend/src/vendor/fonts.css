@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'Dino Pro';
+  font-style:  normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./fonts/DINPro.woff2") format("woff2"),
+       url("./fonts/DINPro.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'Dino Pro';
+  font-style:  normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./fonts/DINPro-Bold.woff2") format("woff2"),
+       url("./fonts/DINPro-Bold.woff") format("woff");
+}
