@@ -2,7 +2,7 @@
 name = "36-hours-a-day"
 version = "0.1.0"
 description = ""
-authors = ["Petr Oganin <necroshizo@gmail.com>"]
+authors = ["36 часов в сутках"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
