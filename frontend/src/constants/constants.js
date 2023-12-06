@@ -1,4 +1,4 @@
-const ITEMS = [
+export const ITEMS = [
   {	
     id: 1,
     productKey: 546227,
@@ -62,7 +62,3 @@ const ITEMS = [
   date: '2010.1.24'
   }
 ]
-
-export {
-  ITEMS
-}

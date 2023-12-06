@@ -11,8 +11,6 @@ function Main({items, matchedItems, onItemClick, onSearchMatch, itemToMatch}) {
 
 
   function onFilterChange(e) {
-    console.log(filteredItems);
-
     return setStatusFilter(e.target.value);
   }
 
@@ -22,6 +20,28 @@ function Main({items, matchedItems, onItemClick, onSearchMatch, itemToMatch}) {
     } else 
     return false;
   }
+
+  function handleFilterItems(items, matchedItems) {
+    if (statusFilter === 'yes') {
+      setFilteredItems(items.filter((item) => {
+        if (checkIsMatched(matchedItems, item)) {
+          return item
+        }
+      }))
+    } else if (statusFilter === 'no') {
+      setFilteredItems(items.filter((item) => {
+        if (!checkIsMatched(matchedItems, item)) {
+          return item
+        }
+      }))
+    } else 
+    setFilteredItems(items)
+  }
+
+  useEffect(() => {
+    handleFilterItems(items, matchedItems);
+  }, [statusFilter])
+
 
   return (
     <section className='main'>

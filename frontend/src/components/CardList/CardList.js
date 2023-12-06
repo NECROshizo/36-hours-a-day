@@ -5,14 +5,13 @@ import Stack from '@mui/material/Stack';
 
 import Card from '../Card/Card';
 
-function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter, itemToMatch, checkIsMatched, onFilterChange, filteredItems}) {
+function CardList({matchedItems, onItemClick, onSearchMatch, statusFilter, itemToMatch, checkIsMatched, onFilterChange, filteredItems}) {
 
   const [page, setPage] = useState(1);
-  const [pages] = useState(Math.round(items.length/2))
+  const [pages] = useState(Math.round(filteredItems.length/2))
 
   function handlePageChange(value) {
     setPage(value);
-    onFilterChange(matchedItems, items);
   }
 
     return (
@@ -32,7 +31,7 @@ function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter
       </ul>}
       {(statusFilter === 'yes') && <ul className='cardlist'>
         {filteredItems.slice(2*(page-1), 2*page).map((item) => (
-          checkIsMatched(matchedItems, item) && <Card 
+          <Card 
             item={item}
             key={item.id}
             isMatched={checkIsMatched(matchedItems, item)}
@@ -45,7 +44,7 @@ function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter
       </ul>}
       {(statusFilter === 'no') && <ul className='cardlist'>
         {filteredItems.slice(2*(page-1), 2*page).map((item) => (
-          !checkIsMatched(matchedItems, item) &&  <Card 
+          <Card 
             item={item}
             key={item.id}
             isMatched={checkIsMatched(matchedItems, item)}
