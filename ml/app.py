@@ -49,7 +49,8 @@ def main():
 
 if __name__ == '__main__':
     _logger = create_logger()
-    schedule.every().day.at(st.START_TIME).do(main)
+    _logger.warning(f'Start at {st.START_TIME}')
+    schedule.every().day.at(st.START_TIME, 'Europe/Moscow').do(main)
 
     while True:
         schedule.run_pending()
