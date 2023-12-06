@@ -3,9 +3,11 @@ version: "3.9"
 services:
 
   postgres:
-    image: postgres:13
+    image: postgres:15-alpine
     env_file: .env
-    # container_name: postgres_prossept
+    ports:
+      - "5432:5432"
+    # container_name: postgres_prosept
     volumes:
       - data:/var/lib/postgresql/data/
     # healthcheck:
@@ -14,6 +16,8 @@ services:
     #   timeout: 3s
     #   retries: 5
     #   start_period: 3s
+    networks:
+      - services
 
   backend:
     build:
@@ -27,6 +31,8 @@ services:
       # - static:/app/static/
       - static:/backend_static/
       - media:/app/media/
+    networks:
+      - services
 
   frontend:
     build:
@@ -36,6 +42,8 @@ services:
       - static:/app/result_build/build
     depends_on:
       - backend
+    networks:
+      - services
 
   nginx:
     image: nginx:1.19.3
@@ -49,8 +57,25 @@ services:
       - static:/usr/share/nginx/html/
       - ./docs/:/usr/share/nginx/html/api/docs/
       - media:/usr/share/nginx/html/media/
+    networks:
+      - services
+
+  ml:
+    build:
+      context: ../ml
+      dockerfile: Dockerfile
+    restart: always
+    # env_file: .env
+    depends_on:
+      - nginx
+    networks:
+      - services
 
 volumes:
   data:
   static:
   media:
+
+networks:
+  services:
+    name: prosept
