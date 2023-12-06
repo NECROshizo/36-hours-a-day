@@ -42,9 +42,11 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    # needs: build_and_push_to_docker_hub
-    # if: github.ref == 'refs/heads/master'
+    # # needs: build_and_push_to_docker_hub
+    # # if: github.ref == 'refs/heads/master'
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
       - name: executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         with:
@@ -52,21 +54,22 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
+          source: "infra/docker-compose.yml, infra/nginx.conf"
+          target: "infra"
+          strip_components: 1
+      - name: Executing remote ssh commands to deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            sudo docker-compose stop
-            sudo docker-compose rm ${{ secrets.DOCKER_USERNAME }}/backend
-            sudo docker-compose rm ${{ secrets.DOCKER_USERNAME }}/frontend
-            sudo docker-compose rm ${{ secrets.DOCKER_USERNAME }}/ml
-            rm -f .env
-            touch .env
-            echo PRODUCT_KEY=${{ secrets.SECRET_KEY }} >> .env
-            echo DEBUG=${{ secrets.DEBUG }} >> .env
-            echo DB_SQL=${{ secrets.DB_SQL }} >> .env
-            echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> .env
-            echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
-            echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
-            echo DB_HOST=${{ secrets.DB_HOST }} >> .env
-            echo DB_PORT=${{ secrets.DB_PORT }} >> .env
-            sudo docker-compose up -d
-            sudo docker-compose exec -T backend python manage.py migrate
-            sudo docker-compose exec -T backend python manage.py collectstatic --no-input
+            cd infra
+            sudo docker compose -f docker-compose.yml pull
+            sudo docker compose -f docker-compose.yml down --volumes
+            sudo docker compose -f docker-compose.yml up -d
+            sudo docker compose -f docker-compose.yml exec backend python manage.py migrate
+            sudo docker compose -f docker-compose.yml exec backend python manage.py collectstatic --no-input
+            sudo docker compose -f docker-compose.yml exec backend python manage.py loaddata database_dump.json
+            sudo docker compose -f docker-compose.yml exec backend cp -r /app/backend_static/. /backend_static/static/
