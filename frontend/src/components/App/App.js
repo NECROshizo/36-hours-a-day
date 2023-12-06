@@ -9,7 +9,9 @@ import {ITEMS} from '../../constants/constants';
 
 
 function App() {
-/* const items = [
+
+  /*
+  const items = [
   {	
     id: 1,
     productKey: 546227,
