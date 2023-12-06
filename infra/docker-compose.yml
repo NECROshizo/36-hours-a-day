@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgres:15-alpine
+    env_file: .env
+    ports:
+    volumes:
+      - data:/var/lib/postgresql/data/
+    networks:
+      - services
+
+  backend:
+    image: necroshizo/backend
+    env_file: .env
+    depends_on:
+      - postgres
+    volumes:
+      - static:/static/
+      - media:/app/media/
+    networks:
+      - services
+
+  frontend:
+    image: necroshizo/frontend
+    volumes:
+      - static:/app/result_build/build
+    depends_on:
+      - backend
+    networks:
+      - services
+
+  nginx:
+    image: nginx:1.19.3
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - static:/usr/share/nginx/html/
+      - ./docs/:/usr/share/nginx/html/api/docs/
+      - media:/usr/share/nginx/html/media/
+    networks:
+      - services
+
+  ml:
+    build:
+    image: necroshizo/ml
+    restart: always
+    depends_on:
+      - nginx
+    networks:
+      - services
+
+volumes:
+  data:
+  static:
+  media:
+
+networks:
+  services:
+    name: prosept
