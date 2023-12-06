@@ -9,6 +9,8 @@ import {ITEMS} from '../../constants/constants';
 
 
 function App() {
+
+  /*
   const items = [
   {	
     id: 1,
@@ -72,7 +74,7 @@ function App() {
   name: 'item1',
   date: '2010.1.24'
   }
-] 
+] */
   const matchedItems = [
     {
       id: 1,
@@ -95,7 +97,7 @@ function App() {
       name: 'itemProsept5'
     }
   ]
-//  const [items, setItems] = useState([ITEMS]);
+  const [items, setItems] = useState([ITEMS]);
   const [itemToMatch, setItemToMatch] = useState({});
 
   useEffect(() => {
@@ -118,7 +120,7 @@ function App() {
       return prosept.name
     } else return ''
   }
-/*
+
   useEffect(() => {
     dealersApi.getDealerProducts()
       .then((data) => {
@@ -128,7 +130,7 @@ function App() {
         console.log(`Ошибка: ${err}`)
       })
   }, [])
- */ 
+  
 
   return (
     <div className='page'>
