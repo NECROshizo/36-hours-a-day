@@ -53,10 +53,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            sudo docker compose stop
-            sudo docker compose rm ${{ secrets.DOCKER_USERNAME }}/backend
-            sudo docker compose rm ${{ secrets.DOCKER_USERNAME }}/frontend
-            sudo docker compose rm ${{ secrets.DOCKER_USERNAME }}/ml
+            sudo docker-compose stop
+            sudo docker-compose rm ${{ secrets.DOCKER_USERNAME }}/backend
+            sudo docker-compose rm ${{ secrets.DOCKER_USERNAME }}/frontend
+            sudo docker-compose rm ${{ secrets.DOCKER_USERNAME }}/ml
             rm -f .env
             touch .env
             echo PRODUCT_KEY=${{ secrets.SECRET_KEY }} >> .env
@@ -67,6 +67,6 @@ jobs:
             echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
-            sudo docker compose up -d
-            sudo docker compose exec -T backend python manage.py migrate
-            sudo docker compose exec -T backend python manage.py collectstatic --no-input
+            sudo docker-compose up -d
+            sudo docker-compose exec -T backend python manage.py migrate
+            sudo docker-compose exec -T backend python manage.py collectstatic --no-input
