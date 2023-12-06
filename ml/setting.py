@@ -10,7 +10,7 @@ class Setting:
     API_VERSION = 'v1'
     PORT = '8000'
     HOST = 'backend'
-    START_TIME = '21:03'
+    START_TIME = '23:30:15'
 
 
 def create_logger():

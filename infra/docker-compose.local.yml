@@ -16,6 +16,8 @@ services:
     #   timeout: 3s
     #   retries: 5
     #   start_period: 3s
+    networks:
+      - services
 
   backend:
     build:
@@ -29,6 +31,8 @@ services:
       # - static:/app/static/
       - static:/backend_static/
       - media:/app/media/
+    networks:
+      - services
 
   frontend:
     build:
@@ -38,6 +42,8 @@ services:
       - static:/app/result_build/build
     depends_on:
       - backend
+    networks:
+      - services
 
   nginx:
     image: nginx:1.19.3
@@ -51,6 +57,8 @@ services:
       - static:/usr/share/nginx/html/
       - ./docs/:/usr/share/nginx/html/api/docs/
       - media:/usr/share/nginx/html/media/
+    networks:
+      - services
 
   ml:
     build:
@@ -60,8 +68,14 @@ services:
     # env_file: .env
     depends_on:
       - nginx
+    networks:
+      - services
 
 volumes:
   data:
   static:
   media:
+
+networks:
+  services:
+    name: prosept
