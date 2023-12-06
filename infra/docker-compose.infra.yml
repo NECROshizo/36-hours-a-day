@@ -29,4 +29,4 @@ volumes:
 
 networks:
   services:
-    name: prosset
+    name: proset
