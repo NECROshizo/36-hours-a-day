@@ -34,8 +34,7 @@ function Main({items, matchedItems, onItemClick, onSearchMatch, itemToMatch}) {
           return item
         }
       }))
-    } else 
-    setFilteredItems(items)
+    } else setFilteredItems(items)
   }
 
   useEffect(() => {
