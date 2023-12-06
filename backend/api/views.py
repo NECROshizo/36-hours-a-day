@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.http import Http404
+from django.conf import settings
 from rest_framework.decorators import action
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.response import Response
@@ -17,7 +18,10 @@ class DialerViewSet(ReadOnlyModelViewSet):
 
 
 class DealerPriceViewSet(ReadOnlyModelViewSet):
-    queryset = DealerPrice.objects.order_by('product_key', 'date').distinct('product_key')
+    if not settings.DB_SQL:
+        queryset = DealerPrice.objects.order_by('product_key', 'date').distinct('product_key')
+    else:
+        queryset = DealerPrice.objects.all()    
 
     serializer_class = DialerPriceSerializer
     pagination_class = PageLimitPagination
