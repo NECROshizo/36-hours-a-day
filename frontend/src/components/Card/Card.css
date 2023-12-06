@@ -1,0 +1,56 @@
+.card {
+  width: 100%;
+  margin-bottom: 60px;
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 15px;
+}
+
+.card__link {
+  text-decoration: none;
+}
+
+.card__title {
+  width: 300px;
+  color: rgb(56, 164, 58);
+  font-size: 18px;
+  font-weight: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card__title:hover {
+  overflow: inherit;
+  text-overflow: inherit;
+  white-space: inherit;
+  height: auto;
+}
+
+.card__date, .card__price, .card__prod-name {
+  width: 160px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.card__status {
+  margin: 0 70px;
+  width: 20px;
+  height: 20px;
+}
+
+.card__status_type_done {
+  background-image: url(../../images/status.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.card__prod-name {
+  font-weight: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
