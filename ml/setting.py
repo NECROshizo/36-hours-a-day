@@ -9,8 +9,8 @@ class Setting:
     URL_POST = 'match/make_match/'
     API_VERSION = 'v1'
     PORT = '8000'
-    HOST = 'localhost'
-    START_TIME = '23:00'
+    HOST = 'backend'
+    START_TIME = '23:30'
 
 
 def create_logger():
