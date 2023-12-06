@@ -1,0 +1,28 @@
+.filter {
+  width: 1140px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter__box {
+  font-weight: bold;
+  width: 160px;
+  height: 34px;
+}
+
+.filter__title {
+  width: 300px;
+  color: rgb(56, 164, 58);
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.filter__date, .filter__price, .filter__prod-name {
+  justify-content: space-around;
+  text-align: center;
+  width: 160px;
+  font-weight: bold;
+}
