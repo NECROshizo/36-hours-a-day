@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './CardList.css';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -8,12 +8,15 @@ import Card from '../Card/Card';
 function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter, itemToMatch, checkIsMatched, onFilterChange, filteredItems}) {
 
   const [page, setPage] = useState(1);
-  const [pages] = useState(Math.round(items.length/2))
+  const [pages, setPages] = useState(Math.round(filteredItems.length/2))
 
-  function handlePageChange(value) {
+  function handlePageChange(e, value) {
     setPage(value);
-    onFilterChange(matchedItems, items);
   }
+
+  useEffect(() => {
+    setPages(Math.round(filteredItems.length/2))
+  }, [filteredItems]) 
 
     return (
     <Stack spacing={2}>
@@ -32,7 +35,7 @@ function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter
       </ul>}
       {(statusFilter === 'yes') && <ul className='cardlist'>
         {filteredItems.slice(2*(page-1), 2*page).map((item) => (
-          checkIsMatched(matchedItems, item) && <Card 
+          <Card 
             item={item}
             key={item.id}
             isMatched={checkIsMatched(matchedItems, item)}
@@ -45,7 +48,7 @@ function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter
       </ul>}
       {(statusFilter === 'no') && <ul className='cardlist'>
         {filteredItems.slice(2*(page-1), 2*page).map((item) => (
-          !checkIsMatched(matchedItems, item) &&  <Card 
+          <Card 
             item={item}
             key={item.id}
             isMatched={checkIsMatched(matchedItems, item)}
