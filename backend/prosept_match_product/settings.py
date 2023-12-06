@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('PRODUCT_KEY', default=get_random_secret_key())
 
-DEBUG = os.getenv('DEBUG_MODE', False) == 'True'
+DEBUG = os.getenv('DEBUG_MODE', 'True') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'rest_framework.authtoken',
     'djoser',
     'api',
@@ -33,6 +34,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -73,10 +75,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('POSTGRES_DB', 'django'),
+            'NAME': os.getenv('POSTGRES_DB', 'prosept_db'),
             'USER': os.getenv('POSTGRES_USER', 'django'),
-            'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
-            'HOST': os.getenv('DB_HOST', ''),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'django'),
+            'HOST': os.getenv('DB_HOST', 'localhost'),
             'PORT': os.getenv('DB_PORT', 5432),
         }
     }
@@ -115,6 +117,19 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_URLS_REGEX = r'^/api/.*$' 
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+] 
