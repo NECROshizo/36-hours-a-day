@@ -160,3 +160,8 @@ cython_debug/
 #.idea/
 .vscode
 data/
+
+.DS_Store
+marketing_dealerprice.csv
+marketing_product.csv
+marketing_productdealerkey.csv
