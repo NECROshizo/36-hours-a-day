@@ -56,7 +56,6 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           source: "infra/docker-compose.yml, infra/nginx.conf"
           target: "prosept/"
-          strip_components: 1
       - name: Executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         with:
@@ -65,7 +64,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            cd prosept
+            cd prosept/
             sudo docker compose -f docker-compose.yml pull
             sudo docker compose -f docker-compose.yml down --volumes
             sudo docker compose -f docker-compose.yml up -d
