@@ -22,7 +22,7 @@ function Item({itemToMatch, setItemToMatch, matchedItems, onSearchMatch}) {
   return (
     <section className='item'>
       <div className='item__dealer-info'>
-        <p className='item__prod-name'>{itemToMatch.name}</p>
+        <p className='item__prod-name'>{itemToMatch.product_name}</p>
         <p className='item__price'>{itemToMatch.price}</p>
       </div>
       <form className='item__match-search'>

@@ -8,11 +8,15 @@ import Card from '../Card/Card';
 function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter, itemToMatch, checkIsMatched, onFilterChange, filteredItems}) {
 
   const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(Math.round(filteredItems.length/2))
+  const [pages,setPages] = useState(Math.round(items.length/2));
 
   function handlePageChange(e, value) {
     setPage(value);
   }
+
+  useEffect(() => {
+    setPages((Math.round(items.length/2)))
+  }, []) 
 
   useEffect(() => {
     setPages(Math.round(filteredItems.length/2))
@@ -21,10 +25,10 @@ function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter
     return (
     <Stack spacing={2}>
       {((statusFilter === 'all') || (statusFilter === '')) && <ul className='cardlist'>
-        {filteredItems.slice(2*(page-1), 2*page).map((item) => (
+        {items.slice(2*(page-1), 2*page).map((item) => (
           <Card 
             item={item}
-            key={item.id}
+            key={item.product_key}
             isMatched={checkIsMatched(matchedItems, item)}
             matchedItems={matchedItems}
             onItemClick={onItemClick}

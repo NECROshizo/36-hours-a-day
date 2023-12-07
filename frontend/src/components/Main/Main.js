@@ -38,6 +38,10 @@ function Main({items, matchedItems, onItemClick, onSearchMatch, itemToMatch}) {
   }
 
   useEffect(() => {
+    setFilteredItems(items);
+  }, [])
+
+  useEffect(() => {
     handleFilterItems(items, matchedItems);
   }, [statusFilter])
 

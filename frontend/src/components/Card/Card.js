@@ -15,7 +15,7 @@ function Card({item, isMatched, matchedItems, onItemClick, onSearchMatch, itemTo
   return (
     <li className='card'>
       <Link className='card__link' to={`${item.id}`} onClick={handleOpenItem}>
-        <h1 className='card__title'>{item.name}</h1>
+        <h1 className='card__title'>{item.product_name}</h1>
       </Link>
         <div className={isMatched ? 'card__status card__status_type_done' : 'card__status'}></div>
         <p className='card__date'>{item.date}</p>
