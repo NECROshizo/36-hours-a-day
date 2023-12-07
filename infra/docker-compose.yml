@@ -12,7 +12,7 @@ services:
       - services
 
   backend:
-    image: necroshizo/backend
+    image: necroshizo/backend:latest
     env_file: .env
     depends_on:
       - postgres
@@ -23,7 +23,7 @@ services:
       - services
 
   frontend:
-    image: necroshizo/frontend
+    image: necroshizo/frontend:latest
     volumes:
       - static:/app/result_build/build
     depends_on:
@@ -34,7 +34,7 @@ services:
   nginx:
     image: nginx:1.19.3
     ports:
-      - "80:80"
+      - "5050:80"
     depends_on:
       - backend
     volumes:
@@ -47,7 +47,7 @@ services:
 
   ml:
     build:
-    image: necroshizo/ml
+    image: necroshizo/ml:latest
     restart: always
     depends_on:
       - nginx
