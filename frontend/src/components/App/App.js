@@ -20,14 +20,28 @@ function App() {
     }
   }, []);
 
-  function onItemClick(item) {
-    setItemToMatch(item);
-    localStorage.setItem('itemToMatch', JSON.stringify(item));
+  useEffect(() => {
+    const storedProposals = localStorage.getItem('proposals');
+    if (storedProposals) {
+      setProposals(JSON.parse(storedProposals));
+    }
+  }, []);
+
+  function handleGetProposals(itemToMatch) {
     dealersApi.getDataToMatch(itemToMatch.product_key)
       .then((data) => {
         setProposals(data);
+        localStorage.setItem('proposals', JSON.stringify(data))
       })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`)
+      })
+  }
 
+  function onItemClick(item) {
+    setItemToMatch(item);
+    localStorage.setItem('itemToMatch', JSON.stringify(item));
+    handleGetProposals(item);
   }
 
   function onSearchMatch(item) {
@@ -56,8 +70,7 @@ function App() {
 
   return (
     <div className='page'>
-      <Header
-      />
+      <Header/>
       <Routes>
         <Route path='/'
           element={<Main
@@ -71,9 +84,10 @@ function App() {
         <Route path={`/${itemToMatch.id}`}
           element={<Item
             itemToMatch={itemToMatch}
-            proposals={proposals}
             setItemToMatch={setItemToMatch}
             onSearchMatch={onSearchMatch}
+            proposals={proposals}
+            setProposals={setProposals}
           />}
         />
       </Routes>

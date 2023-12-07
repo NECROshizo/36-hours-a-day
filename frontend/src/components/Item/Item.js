@@ -1,48 +1,40 @@
 import './Item.css';
 import {Link} from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {dealersApi} from '../../utils/dealersApi';
 
 
 function Item({itemToMatch, proposals}) {
-/*
-  const proposals = [
-    {
-      pr_id: 1,
-      name: 'Предложение 1'
-    },
-    {
-      pr_id: 2,
-      name: 'Предложение 2'
-    },
-    {      
-      pr_id: 3,
-      name: 'Предложение 3'
-    },
-    {
-      pr_id: 4,
-      name: 'Предложение 4'
-    },
-    {
-      pr_id: 5,
-      name: 'Предложение 5'
-    },
-  ]
-*/
-  const [value, setValue] = useState(proposals[0].pr_id);
-  const [isMatched, setIsMatched] = useState(itemToMatch.is_defined)
+
+  const [itemValue, setItemValue] = useState(0);
+  const [isMatched, setIsMatched] = useState(itemToMatch.is_defined);
+
+  useEffect(() => {
+    console.log(isMatched)
+    setIsMatched(itemToMatch.is_defined);
+  }, [])
 
   function handleChange(e) {
-    setValue(e.target.value);
-    console.log(value);
+    setItemValue(e.target.value);
   }
-
+/*
+  function showOwnProduct(id) {
+    dealersApi.getOwnProduct(id)
+      .then((data) => {
+        setIsMatched(true);
+      })
+      .then(() => console.log(matchedProduct))
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`)
+      })
+    }
+*/
   function handleSetMatch(e) {
     e.preventDefault();
-    console.log(value);
-    dealersApi.setMatch(itemToMatch.product_key, value)
+    dealersApi.setMatch(itemToMatch.product_key, itemValue)
       .then(() => {
-      setIsMatched(true);  
+      setIsMatched(true);
+      localStorage.setItem('matchedId', itemValue);
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`)
@@ -51,12 +43,14 @@ function Item({itemToMatch, proposals}) {
 
   function handleResetMatch(e) {
     e.preventDefault();
-    dealersApi.setMatch(itemToMatch.product_key, value)
+    const del = 0;
+    dealersApi.deleteMatch(itemToMatch.product_key, del)
     .then(() => {
       setIsMatched(false);
     })
     .catch((err) => {
-      console.log(`Ошибка: ${err}`)
+      setIsMatched(false);
+      console.log(`Ошибка: ${err}`);
     })
   }
 
@@ -72,11 +66,13 @@ function Item({itemToMatch, proposals}) {
         <select className='item__match-proposal'
           onChange={handleChange}
           >
+            <option className='item__proposal-name'>Выберете товар</option>
             {
               proposals.map((item) => (
                 <option className='item__proposal-name'
-                  value={item.pr_id}
-                  key={item.pr_id}>
+                  id={item.id}
+                  value={item.id}
+                  key={item.id}>
                     {item.name}
                 </option>
               ))
