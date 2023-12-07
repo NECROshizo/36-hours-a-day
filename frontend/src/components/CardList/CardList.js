@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 
 import Card from '../Card/Card';
 
-function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter, itemToMatch, checkIsMatched, onFilterChange, filteredItems}) {
+function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter, itemToMatch, checkIsMatched, filteredItems}) {
 
   const [page, setPage] = useState(1);
   const [pages,setPages] = useState(Math.round(items.length/2));
@@ -15,21 +15,17 @@ function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter
   }
 
   useEffect(() => {
-    setPages((Math.round(items.length/2)))
+    setPages((Math.round(items.length/5)))
   }, [items.length]) 
-
-  useEffect(() => {
-    setPages(Math.round(filteredItems.length/2))
-  }, [filteredItems]) 
 
     return (
     <Stack spacing={2}>
       {((statusFilter === 'all') || (statusFilter === '')) && <ul className='cardlist'>
-        {items.slice(2*(page-1), 2*page).map((item) => (
+        {items.slice(5*(page-1), 5*page).map((item) => (
           <Card 
             item={item}
             key={item.product_key}
-            isMatched={checkIsMatched(matchedItems, item)}
+            isMatched={checkIsMatched(item)}
             matchedItems={matchedItems}
             onItemClick={onItemClick}
             onSearchMatch={onSearchMatch}
@@ -38,11 +34,11 @@ function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter
         ))}
       </ul>}
       {(statusFilter === 'yes') && <ul className='cardlist'>
-        {filteredItems.slice(2*(page-1), 2*page).map((item) => (
+        {filteredItems.slice(5*(page-1), 5*page).map((item) => (
           <Card 
             item={item}
             key={item.id}
-            isMatched={checkIsMatched(matchedItems, item)}
+            isMatched={checkIsMatched(item)}
             matchedItems={matchedItems}
             onItemClick={onItemClick}
             onSearchMatch={onSearchMatch}
@@ -51,11 +47,11 @@ function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter
         ))}
       </ul>}
       {(statusFilter === 'no') && <ul className='cardlist'>
-        {filteredItems.slice(2*(page-1), 2*page).map((item) => (
+        {filteredItems.slice(5*(page-1), 5*page).map((item) => (
           <Card 
             item={item}
             key={item.id}
-            isMatched={checkIsMatched(matchedItems, item)}
+            isMatched={checkIsMatched(item)}
             matchedItems={matchedItems}
             onItemClick={onItemClick}
             onSearchMatch={onSearchMatch}

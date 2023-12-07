@@ -21,7 +21,7 @@ class DealerPriceViewSet(ReadOnlyModelViewSet):
     if not settings.DB_SQL:
         queryset = DealerPrice.objects.order_by('product_key', 'date').distinct('product_key')
     else:
-        queryset = DealerPrice.objects.all()    
+        queryset = DealerPrice.objects.all()
 
     serializer_class = DialerPriceSerializer
     pagination_class = PageLimitPagination
@@ -37,14 +37,14 @@ class DealerPriceViewSet(ReadOnlyModelViewSet):
             raise Http404(
                 f'Не найден продукт с номером {pk}'
             )
-        
+
         if MLResult.objects.filter(product_key=pk).exists():
             return Response(ProductSerializer(Product.objects.filter(product_ml__product_key=pk), many=True).data)
         else:
             raise Http404(
-                f'Не найден связки'
+                'Не найден связки'
             )
-        
+
 
     @action(
         methods=["post"], detail=True, url_path="set_link_with_product/(?P<pr_id>\d+)"

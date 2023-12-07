@@ -14,23 +14,23 @@ function Main({items, matchedItems, onItemClick, onSearchMatch, itemToMatch}) {
     return setStatusFilter(e.target.value);
   }
 
-  function checkIsMatched(matchedItems, item) {
-    if (matchedItems.find((matchedItem) => matchedItem.dealerKey === item.id)) {
+  function checkIsMatched(item) {
+    if (item.is_defined) {
       return true;
     } else 
     return false;
   }
 
-  function handleFilterItems(items, matchedItems) {
+  function handleFilterItems(items) {
     if (statusFilter === 'yes') {
       setFilteredItems(items.filter((item) => {
-        if (checkIsMatched(matchedItems, item)) {
+        if (checkIsMatched(item)) {
           return item
         }
       }))
     } else if (statusFilter === 'no') {
       setFilteredItems(items.filter((item) => {
-        if (!checkIsMatched(matchedItems, item)) {
+        if (!checkIsMatched(item)) {
           return item
         }
       }))
@@ -38,7 +38,7 @@ function Main({items, matchedItems, onItemClick, onSearchMatch, itemToMatch}) {
   }
 
   useEffect(() => {
-    setFilteredItems(items);
+    setFilteredItems(items)
   }, [])
 
   useEffect(() => {

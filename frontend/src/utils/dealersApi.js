@@ -13,6 +13,7 @@ class DealersApi {
 
   getDealerProducts() {
     return fetch(`${this._baseUrl}/dialer_prices/`, {
+      method: 'GET',
       headers: {
         ...this._headers,
       },
@@ -20,11 +21,59 @@ class DealersApi {
     .then(this._checkResponse)
   }
 
+  getOwnProduct(id) {
+    return fetch(`${this._baseUrl}/products/${id}/`, {
+      method: 'GET',
+      headers: {
+        ...this._headers,
+      },
+    })
+    .then(this._checkResponse)
+  }
+
+  getItemToMatch(id) {
+    return fetch(`${this._baseUrl}/dialer_prices/${id}/`, {
+      method: 'GET',
+      headers: {
+        ...this._headers,
+      },
+    })
+    .then(this._checkResponse)
+  }
+
+  getDataToMatch(id) {
+    return fetch(`${this._baseUrl}/dialer_prices/${id}/get_data_for_marking/`, {
+      method: 'GET',
+      headers: {
+        ...this._headers,
+      },
+    })
+    .then(this._checkResponse)
+  }
   
+  setMatch(id, pr_id) {
+    return fetch(`${this._baseUrl}/dialer_prices/${id}/set_link_with_product/${pr_id}/`, {
+      method: 'POST',
+      headers: {
+        ...this._headers,
+      },
+    })
+    .then(this._checkResponse)
+  }
+
+  deleteMatch(id, pr_id) {
+    return fetch(`${this._baseUrl}/dialer_prices/${id}/set_link_with_product/${pr_id}/`, {
+      method: 'POST',
+      headers: {
+        ...this._headers,
+      },
+    })
+    .then(this._checkResponse)
+  }
 }
 
 const dealersApi = new DealersApi(
-  `http://127.0.0.1:8000/api/v1`,
+  `http://127.0.0.1/api/v1`,
   {
     'Content-Type': 'application/json'
   }
