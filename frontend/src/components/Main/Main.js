@@ -21,16 +21,16 @@ function Main({items, matchedItems, onItemClick, onSearchMatch, itemToMatch}) {
     return false;
   }
 
-  function handleFilterItems(items, matchedItems) {
+  function handleFilterItems(items) {
     if (statusFilter === 'yes') {
       setFilteredItems(items.filter((item) => {
-        if (checkIsMatched(matchedItems, item)) {
+        if (checkIsMatched(item)) {
           return item
         }
       }))
     } else if (statusFilter === 'no') {
       setFilteredItems(items.filter((item) => {
-        if (!checkIsMatched(matchedItems, item)) {
+        if (!checkIsMatched(item)) {
           return item
         }
       }))

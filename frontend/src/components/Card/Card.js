@@ -1,8 +1,10 @@
 import './Card.css';
 import {Link} from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-function Card({item, isMatched, onItemClick, onSearchMatch}) {
+function Card({item, onItemClick, onSearchMatch}) {
 
+  const [isMatched, setIsMatched] = useState(false);
 
   function handleFindMatched(item) {
     return onSearchMatch(item)
@@ -11,6 +13,10 @@ function Card({item, isMatched, onItemClick, onSearchMatch}) {
   function handleOpenItem() {
     onItemClick(item);
   }
+
+  useEffect(() => {
+    console.log(item);
+  }, [])
 
   return (
     <li className='card'>

@@ -45,7 +45,7 @@ function App() {
   }
 
   function onSearchMatch(item) {
-    const prosept = item.product_cust;
+    const prosept = item.product_cust.name;
     if (prosept) {
       return prosept
     } else return ''

@@ -16,18 +16,7 @@ function Item({itemToMatch, setItemToMatch, proposals}) {
   function handleChange(e) {
     setItemValue(e.target.value);
   }
-/*
-  function showOwnProduct(id) {
-    dealersApi.getOwnProduct(id)
-      .then((data) => {
-        setIsMatched(true);
-      })
-      .then(() => console.log(matchedProduct))
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`)
-      })
-    }
-*/
+
   function handleSetMatch(e) {
     e.preventDefault();
     dealersApi.setMatch(itemToMatch.product_key, itemValue)
@@ -87,7 +76,7 @@ function Item({itemToMatch, setItemToMatch, proposals}) {
         <div className='item__buttons'>
           <button className='item__button' type='submit' onClick={handleSetMatch} form='match-search'>Да</button>
           <button className='item__button' type='submit' onClick={handleResetMatch}>Нет</button>
-          <Link to='/' className='item__back-link'>Отложить</Link>
+          <Link to='/' className='item__back-link'>Назад</Link>
         </div>
       </form>
     </section>
