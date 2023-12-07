@@ -46,10 +46,10 @@ services:
       - services
 
   nginx:
-    image: nginx:1.19.3
+    image: nginx:1.25.3
     # container_name: nginx_prossept
     ports:
-      - "80:80"
+      - "8000:80"
     depends_on:
       - backend
     volumes:
