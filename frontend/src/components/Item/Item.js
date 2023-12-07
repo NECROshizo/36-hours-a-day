@@ -15,15 +15,13 @@ function Item({itemToMatch, setItemToMatch, matchedItems, onSearchMatch}) {
     console.log(value);
   }
 
-  function handleSubmitMatch() {
-
-  }
-
   return (
     <section className='item'>
       <div className='item__dealer-info'>
-        <p className='item__prod-name'>{itemToMatch.name}</p>
+        <p className='item__prod-name'>{itemToMatch.product_name}</p>
         <p className='item__price'>{itemToMatch.price}</p>
+        <p className='item__price'>Артикул: {itemToMatch.product_key}</p>
+        <p className='item__price'>Дилер: {itemToMatch.dealer.name}</p>
       </div>
       <form className='item__match-search'>
         <label className='item__proposap-title'>{handleFindMatched(matchedItems, itemToMatch)}</label>
@@ -38,7 +36,7 @@ function Item({itemToMatch, setItemToMatch, matchedItems, onSearchMatch}) {
             <option className='item__proposal-name'>Предложение 5</option>
         </select>
         <div className='item__buttons'>
-          <button className='item__button' onSubmit={handleSubmitMatch}>Да</button>
+          <button className='item__button'>Да</button>
           <button className='item__button'>Нет</button>
           <Link to='/' className='item__back-link'>Отложить</Link>
         </div>
