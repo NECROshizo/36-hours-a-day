@@ -49,7 +49,7 @@ services:
     image: nginx:1.25.3
     # container_name: nginx_prossept
     ports:
-      - "8000:80"
+      - "80:80"
     depends_on:
       - backend
     volumes:
