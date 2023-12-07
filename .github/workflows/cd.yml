@@ -55,7 +55,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           source: "infra/docker-compose.yml, infra/nginx.conf"
-          target: "prosept/"
+          target: "prosept"
       - name: Executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         with:
