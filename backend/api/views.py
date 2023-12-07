@@ -21,7 +21,7 @@ class DealerPriceViewSet(ReadOnlyModelViewSet):
     if not settings.DB_SQL:
         queryset = DealerPrice.objects.order_by('product_key', 'date').distinct('product_key')
     else:
-        queryset = DealerPrice.objects.all()    
+        queryset = DealerPrice.objects.all()
 
     serializer_class = DialerPriceSerializer
     pagination_class = PageLimitPagination
@@ -32,9 +32,19 @@ class DealerPriceViewSet(ReadOnlyModelViewSet):
 
     @action(detail=True)
     def get_data_for_marking(self, request, pk):
-        get_object_or_404(DealerPrice, pk=pk)
-        # болванка для тестирования
-        return Response(ProductSerializer(Product.objects.all()[:5], many=True).data)
+        ob_dprice = DealerPrice.objects.filter(product_key=pk)
+        if not ob_dprice:
+            raise Http404(
+                f'Не найден продукт с номером {pk}'
+            )
+
+        if MLResult.objects.filter(product_key=pk).exists():
+            return Response(ProductSerializer(Product.objects.filter(product_ml__product_key=pk), many=True).data)
+        else:
+            raise Http404(
+                'Не найден связки'
+            )
+
 
     @action(
         methods=["post"], detail=True, url_path="set_link_with_product/(?P<pr_id>\d+)"
@@ -52,7 +62,7 @@ class DealerPriceViewSet(ReadOnlyModelViewSet):
         if int(pr_id):
             ob_prod = get_object_or_404(Product, pk=pr_id)
             ProductDialerKey.objects.get_or_create(
-                product_key=ob_dprice, product_id=ob_prod
+                product_key=pk, product_id=ob_prod
             )
             return Response(
                 data=DialerPriceSerializer(ob_dprice).data, status=status.HTTP_200_OK
