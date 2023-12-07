@@ -62,7 +62,7 @@ class DealerPriceViewSet(ReadOnlyModelViewSet):
         if int(pr_id):
             ob_prod = get_object_or_404(Product, pk=pr_id)
             ProductDialerKey.objects.get_or_create(
-                product_key=ob_dprice, product_id=ob_prod
+                product_key=pk, product_id=ob_prod
             )
             return Response(
                 data=DialerPriceSerializer(ob_dprice).data, status=status.HTTP_200_OK
