@@ -50,7 +50,7 @@ class DealersApi {
     })
     .then(this._checkResponse)
   }
-  
+
   setMatch(id, pr_id) {
     return fetch(`${this._baseUrl}/dialer_prices/${id}/set_link_with_product/${pr_id}/`, {
       method: 'POST',
@@ -73,7 +73,7 @@ class DealersApi {
 }
 
 const dealersApi = new DealersApi(
-  `http://127.0.0.1:8000/api/v1`,
+  `/api/v1`,
   {
     'Content-Type': 'application/json'
   }
