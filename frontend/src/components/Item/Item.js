@@ -4,13 +4,12 @@ import { useEffect, useState } from 'react';
 import {dealersApi} from '../../utils/dealersApi';
 
 
-function Item({itemToMatch, proposals}) {
+function Item({itemToMatch, setItemToMatch, proposals}) {
 
   const [itemValue, setItemValue] = useState(0);
   const [isMatched, setIsMatched] = useState(itemToMatch.is_defined);
 
   useEffect(() => {
-    console.log(isMatched)
     setIsMatched(itemToMatch.is_defined);
   }, [])
 
@@ -33,8 +32,15 @@ function Item({itemToMatch, proposals}) {
     e.preventDefault();
     dealersApi.setMatch(itemToMatch.product_key, itemValue)
       .then(() => {
-      setIsMatched(true);
       localStorage.setItem('matchedId', itemValue);
+      dealersApi.getItemToMatch(itemToMatch.product_key)
+        .then((data) => {
+          setItemToMatch(data);
+          setIsMatched(true);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`)
+        })
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`)
@@ -62,7 +68,7 @@ function Item({itemToMatch, proposals}) {
         <p className='item__info'>Артикул: {itemToMatch.product_key}</p>
       </div>
       <form className='item__match-search' id='match-search'>
-        <label className='item__proposap-title'>{isMatched ? `${itemToMatch.product_cust}` : ''}</label>
+        <label className='item__proposap-title'>{isMatched ? `${itemToMatch.product_cust.name}` : ''}</label>
         <select className='item__match-proposal'
           onChange={handleChange}
           >

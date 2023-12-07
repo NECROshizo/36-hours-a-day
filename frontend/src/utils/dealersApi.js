@@ -73,7 +73,7 @@ class DealersApi {
 }
 
 const dealersApi = new DealersApi(
-  `http://127.0.0.1:8000/api/v1`,
+  `http://127.0.0.1/api/v1`,
   {
     'Content-Type': 'application/json'
   }
