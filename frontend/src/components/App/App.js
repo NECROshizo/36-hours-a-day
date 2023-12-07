@@ -1,6 +1,6 @@
 import './App.css';
-import { useEffect, useState, useRef } from 'react';
-import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Item from '../Item/Item';
@@ -10,71 +10,6 @@ import {ITEMS} from '../../constants/constants';
 
 function App() {
 
-  /*
-  const items = [
-  {	
-    id: 1,
-    productKey: 546227,
-    price: 233.00,
-    //product__url: url('https://akson.ru//p/sredstvo_universalnoe_prosept_universal_spray_500ml/'),
-    name: 'РЎСЂРµРґСЃС‚РІРѕ СѓРЅРёРІРµСЂСЃР°Р»СЊРЅРѕРµ Prosept Universal Spray, 500РјР',
-    date: '2010.1.24'
-  },
-  {
-    id: 2,
-    productKey: 1,
-    price: 100,
-  //  url: norikov.notion.site,
-  name: 'item1',
-  date: '2010.1.24'
-  },{
-    id: 3,
-    productKey: 1,
-    price: 100,
-  //  url: norikov.notion.site,
-  name: 'item1',
-  date: '2010.1.24'
-  },{
-    id: 4,
-    productKey: 1,
-    price: 100,
-  //  url: norikov.notion.site,
-  name: 'item1',
-  date: '2010.1.24'
-  },
-  {
-    id: 5,
-    productKey: 1,
-    price: 100,
-  //  url: norikov.notion.site,
-  name: 'item1',
-  date: '2010.1.24'
-  },
-  {
-    id: 6,
-    productKey: 1,
-    price: 100,
-  //  url: norikov.notion.site,
-  name: 'item1',
-  date: '2010.1.24'
-  },
-  {
-    id: 7,
-    productKey: 1,
-    price: 100,
-  //  url: norikov.notion.site,
-  name: 'item1',
-  date: '2010.1.24'
-  },
-  {
-    id: 8,
-    productKey: 1,
-    price: 100,
-  //  url: norikov.notion.site,
-  name: 'item1',
-  date: '2010.1.24'
-  }
-] */
   const matchedItems = [
     {
       id: 1,
@@ -97,21 +32,19 @@ function App() {
       name: 'itemProsept5'
     }
   ]
-  const [items, setItems] = useState([ITEMS]);
+  const [items, setItems] = useState([]);
   const [itemToMatch, setItemToMatch] = useState({});
 
   useEffect(() => {
     const storedItem = localStorage.getItem('itemToMatch');
     if (storedItem) {
-      setItemToMatch(JSON.parse(storedItem));
+      setItems(JSON.parse(storedItem));
     }
   }, []);
-
 
   function onItemClick(item) {
     setItemToMatch(item);
     localStorage.setItem('itemToMatch', JSON.stringify(item));
-  //  localStorage.clear();
   }
 
   function onSearchMatch(matchedItems, item) {
@@ -122,13 +55,19 @@ function App() {
   }
 
   useEffect(() => {
-    dealersApi.getDealerProducts()
+    const storedItems = localStorage.getItem('items');
+    if (storedItems) {
+      setItems(JSON.parse(storedItems));
+    } else {
+      dealersApi.getDealerProducts()
       .then((data) => {
-        setItems(data);
+        setItems(data.results);
+        localStorage.setItem('items', JSON.stringify(data.results))
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`)
       })
+    }
   }, [])
   
 
