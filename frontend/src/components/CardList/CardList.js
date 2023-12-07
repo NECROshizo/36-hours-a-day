@@ -18,10 +18,6 @@ function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter
     setPages((Math.round(items.length/5)))
   }, [items.length]) 
 
-  useEffect(() => {
-    setPages(Math.round(filteredItems.length/2))
-  }, [filteredItems]) 
-
     return (
     <Stack spacing={2}>
       {((statusFilter === 'all') || (statusFilter === '')) && <ul className='cardlist'>

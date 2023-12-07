@@ -26,7 +26,7 @@ function Card({item, onItemClick, onSearchMatch}) {
         <div className={isMatched ? 'card__status card__status_type_done' : 'card__status'}></div>
         <p className='card__date'>{item.date}</p>
         <p className='card__price'>{item.price}</p>
-        <p className='card__prod-name'>{handleFindMatched(item)}</p>
+        <p className='card__prod-name'>{isMatched ? handleFindMatched(item) : ''}</p>
     </li>
       
   );
