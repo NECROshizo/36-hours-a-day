@@ -1,11 +1,11 @@
 import './Card.css';
 import {Link} from 'react-router-dom';
 
-function Card({item, isMatched, matchedItems, onItemClick, onSearchMatch, itemToMatch}) {
+function Card({item, isMatched, onItemClick, onSearchMatch}) {
 
 
-  function handleFindMatched(matchedItems, item) {
-    return onSearchMatch(matchedItems, item)
+  function handleFindMatched(item) {
+    return onSearchMatch(item)
   }
 
   function handleOpenItem() {
@@ -20,7 +20,7 @@ function Card({item, isMatched, matchedItems, onItemClick, onSearchMatch, itemTo
         <div className={isMatched ? 'card__status card__status_type_done' : 'card__status'}></div>
         <p className='card__date'>{item.date}</p>
         <p className='card__price'>{item.price}</p>
-        <p className='card__prod-name'>{handleFindMatched(matchedItems, item)}</p>
+        <p className='card__prod-name'>{handleFindMatched(item)}</p>
     </li>
       
   );

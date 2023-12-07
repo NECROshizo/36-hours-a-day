@@ -23,7 +23,7 @@
   overflow: hidden;
 }
 
-.card__title:hover {
+.card__title:hover, .card__prod-name:hover {
   overflow: inherit;
   text-overflow: inherit;
   white-space: inherit;

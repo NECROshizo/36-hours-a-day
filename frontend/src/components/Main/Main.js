@@ -14,8 +14,8 @@ function Main({items, matchedItems, onItemClick, onSearchMatch, itemToMatch}) {
     return setStatusFilter(e.target.value);
   }
 
-  function checkIsMatched(matchedItems, item) {
-    if (matchedItems.find((matchedItem) => matchedItem.dealerKey === item.id)) {
+  function checkIsMatched(item) {
+    if (item.is_defined) {
       return true;
     } else 
     return false;
@@ -38,7 +38,7 @@ function Main({items, matchedItems, onItemClick, onSearchMatch, itemToMatch}) {
   }
 
   useEffect(() => {
-    setFilteredItems(items);
+    setFilteredItems(items)
   }, [])
 
   useEffect(() => {
