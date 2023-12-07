@@ -42,21 +42,11 @@ function App() {
     setItemToMatch(item);
     localStorage.setItem('itemToMatch', JSON.stringify(item));
     handleGetProposals(item);
-  }
-
-  function onSearchMatch(item) {
-    const prosept = item.product_cust.name;
-    if (prosept) {
-      return prosept
-    } else return ''
+    console.log(item);
   }
 
   useEffect(() => {
-    const storedItems = localStorage.getItem('items');
-    if (storedItems) {
-      setItems(JSON.parse(storedItems));
-    } else {
-      dealersApi.getDealerProducts()
+    dealersApi.getDealerProducts()
       .then((data) => {
         setItems(data.results);
         localStorage.setItem('items', JSON.stringify(data.results))
@@ -64,9 +54,13 @@ function App() {
       .catch((err) => {
         console.log(`Ошибка: ${err}`)
       })
-    }
   }, [])
-  
+
+  function onSearchMatch(item) {
+    if (item.product_cust.name) {
+      return item.product_cust.name;
+    } else return ''
+  }  
 
   return (
     <div className='page'>

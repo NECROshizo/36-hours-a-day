@@ -24,7 +24,7 @@ function Main({items, matchedItems, onItemClick, onSearchMatch, itemToMatch}) {
   function handleFilterItems(items) {
     if (statusFilter === 'yes') {
       setFilteredItems(items.filter((item) => {
-        if (checkIsMatched(item)) {
+        if (item.is_defined) {
           return item
         }
       }))
@@ -39,11 +39,15 @@ function Main({items, matchedItems, onItemClick, onSearchMatch, itemToMatch}) {
 
   useEffect(() => {
     setFilteredItems(items)
-  }, [])
+  }, [items])
 
   useEffect(() => {
     handleFilterItems(items, matchedItems);
   }, [statusFilter])
+
+  useEffect(() => {
+    handleFilterItems(items, matchedItems);
+  }, [])
 
 
   return (
