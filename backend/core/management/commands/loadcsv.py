@@ -5,7 +5,7 @@ from pathlib import Path
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from product.models import Dialer, DealerPrice, Product, ProductDialerKey
+from product.models import Dialer, DealerPrice, MLResult, Product, ProductDialerKey
 
 
 def get_int_value_from_row(row, name):
@@ -87,11 +87,26 @@ def create_product_dialer_model(file_data: csv.DictReader):
         [
             ProductDialerKey(
                 id=row.get("id"),
-                product_key=get_product_obj(row, 'product_key'),
-                dealer_id=get_dialer_obj(row, 'dealer_id')
+                product_key=row.get("key"),
+                product_id=get_product_obj(row, 'product_id')
             )
             for row in file_data
-            if get_dialer_obj(row)
+            if get_product_obj(row, 'product_id')
+        ]
+    )
+
+
+def create_ml_model(file_data: csv.DictReader):
+    MLResult.objects.all().delete()
+    MLResult.objects.bulk_create(
+        [
+            MLResult(
+                id=row.get("id"),
+                product_key=row.get("key"),
+                product_id=get_product_obj(row, 'product_id')
+            )
+            for row in file_data
+            if get_product_obj(row, 'product_id')
         ]
     )
 
@@ -102,7 +117,8 @@ class Command(BaseCommand):
         ("marketing_dealer.csv", create_dialer_model),
         ("marketing_product.csv", create_product_model),
         ("marketing_dealerprice.csv", create_dealerprice_model),
-        # ('marketing_productdealerkey', create_product_dialer_model),
+        ('marketing_productdealerkey.csv', create_product_dialer_model),
+        ('ml_result.csv', create_ml_model),
     )
 
     def handle(self, *args, **options):
