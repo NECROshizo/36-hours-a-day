@@ -64,7 +64,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            cd prosept/
+            cd prosept
             sudo docker compose -f docker-compose.yml pull
             sudo docker compose -f docker-compose.yml down --volumes
             sudo docker compose -f docker-compose.yml up -d
