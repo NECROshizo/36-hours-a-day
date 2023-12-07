@@ -32,13 +32,18 @@ class DealerPriceViewSet(ReadOnlyModelViewSet):
 
     @action(detail=True)
     def get_data_for_marking(self, request, pk):
-        get_object_or_404(DealerPrice, product_key=pk)
-        # if MLResult.objects.filter(product_key=pk).exist():
-        #     ob = MLResult.objects.filter(product_key=pk)
-
-        return Response(ProductSerializer(Product.objects.all()[:5], many=True).data)
-        # else:
-        #     return Response( )
+        ob_dprice = DealerPrice.objects.filter(product_key=pk)
+        if not ob_dprice:
+            raise Http404(
+                f'Не найден продукт с номером {pk}'
+            )
+        
+        if MLResult.objects.filter(product_key=pk).exists():
+            return Response(ProductSerializer(Product.objects.filter(product_ml__product_key=pk), many=True).data)
+        else:
+            raise Http404(
+                f'Не найден связки'
+            )
         
 
     @action(
