@@ -32,9 +32,14 @@ class DealerPriceViewSet(ReadOnlyModelViewSet):
 
     @action(detail=True)
     def get_data_for_marking(self, request, pk):
-        get_object_or_404(DealerPrice, pk=pk)
-        # болванка для тестирования
+        get_object_or_404(DealerPrice, product_key=pk)
+        # if MLResult.objects.filter(product_key=pk).exist():
+        #     ob = MLResult.objects.filter(product_key=pk)
+
         return Response(ProductSerializer(Product.objects.all()[:5], many=True).data)
+        # else:
+        #     return Response( )
+        
 
     @action(
         methods=["post"], detail=True, url_path="set_link_with_product/(?P<pr_id>\d+)"
