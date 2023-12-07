@@ -2,7 +2,7 @@ import './Card.css';
 import {Link} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-function Card({item, onItemClick, onSearchMatch}) {
+function Card({item, onItemClick, onSearchMatch, statusFilter}) {
 
   const [isMatched, setIsMatched] = useState(false);
 
@@ -15,7 +15,7 @@ function Card({item, onItemClick, onSearchMatch}) {
   }
 
   useEffect(() => {
-    console.log(item);
+    setIsMatched(item.is_defined);
   }, [])
 
   return (
@@ -26,7 +26,7 @@ function Card({item, onItemClick, onSearchMatch}) {
         <div className={isMatched ? 'card__status card__status_type_done' : 'card__status'}></div>
         <p className='card__date'>{item.date}</p>
         <p className='card__price'>{item.price}</p>
-        <p className='card__prod-name'>{isMatched ? handleFindMatched(item) : ''}</p>
+        <p className='card__prod-name'>{isMatched ? item.product_cust.name : ''}</p>
     </li>
       
   );
