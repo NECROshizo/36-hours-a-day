@@ -42,8 +42,10 @@
 }
 
 .item__button {
-  padding: 4px 10px;
+  background: linear-gradient(90deg, rgba(56,164,58,1) 0%, rgba(0,183,234,1) 100%);
+  padding: 4px 50px;
   border: 1px solid #38A43A;
+  color: #fff;
   border-radius: 5px;
 }
 

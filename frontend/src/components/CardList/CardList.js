@@ -16,7 +16,7 @@ function CardList({items, matchedItems, onItemClick, onSearchMatch, statusFilter
 
   useEffect(() => {
     setPages((Math.round(items.length/2)))
-  }, []) 
+  }, [items.length]) 
 
   useEffect(() => {
     setPages(Math.round(filteredItems.length/2))
