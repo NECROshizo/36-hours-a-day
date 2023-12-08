@@ -2,13 +2,9 @@ import './Card.css';
 import {Link} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-function Card({item, onItemClick, onSearchMatch, statusFilter}) {
+function Card({item, onItemClick}) {
 
   const [isMatched, setIsMatched] = useState(false);
-
-  function handleFindMatched(item) {
-    return onSearchMatch(item)
-  }
 
   function handleOpenItem() {
     onItemClick(item);

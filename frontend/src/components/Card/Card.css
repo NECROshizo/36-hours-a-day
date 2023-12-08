@@ -18,7 +18,6 @@
   color: rgb(56, 164, 58);
   font-size: 18px;
   font-weight: normal;
-  text-overflow: ellipsis;
 }
 
 .card__title:hover, .card__prod-name:hover {
@@ -48,7 +47,4 @@
 
 .card__prod-name {
   font-weight: normal;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }

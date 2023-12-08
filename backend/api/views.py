@@ -39,7 +39,11 @@ class DealerPriceViewSet(ReadOnlyModelViewSet):
             )
 
         if MLResult.objects.filter(product_key=pk).exists():
-            return Response(ProductSerializer(Product.objects.filter(product_ml__product_key=pk), many=True).data)
+            return Response(ProductSerializer(
+                Product.objects.filter(
+                    product_ml__product_key=pk).order_by('product_ml__id'
+                ), many=True).data
+            )
         else:
             raise Http404(
                 'Не найден связки'
