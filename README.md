@@ -1,5 +1,5 @@
 # 36-hours-a-day
-Командны проект в рамках Хакатона Просепт. Выполнин командой № 14.
+Командны [проект](http://81.31.246.11/) в рамках Хакатона Просепт. Выполнин командой № 14.
 ### Технологии
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
