@@ -76,7 +76,7 @@ function Item({itemToMatch, setItemToMatch, proposals}) {
         <div className='item__buttons'>
           <button className='item__button' type='submit' onClick={handleSetMatch} form='match-search'>Да</button>
           <button className='item__button' type='submit' onClick={handleResetMatch}>Нет</button>
-          <Link to='/' className='item__back-link'>Назад</Link>
+          <Link to='/' reloadDocument='true' className='item__back-link'>Назад</Link>
         </div>
       </form>
     </section>
