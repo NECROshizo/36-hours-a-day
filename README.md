@@ -19,7 +19,7 @@
     git clone git@github.com:NECROshizo/36-hours-a-day-backend.git
     cd 36-hours-a-day-backend
     ```
-2. Необходимо создать ваил .env по шаблону [.env.example](https://github.com/NECROshizo/36-hours-a-day-backend/blob/main/infra/.env.example)
+2. Необходимо создать фаил .env по шаблону [.env.example](https://github.com/NECROshizo/36-hours-a-day-backend/blob/main/infra/.env.example)
 
 3. Запуск локально
     ```bash
